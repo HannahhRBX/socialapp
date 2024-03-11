@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from "../redux/userSlice";
+import { Link, useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
   const [isHoveredSearch, setIsHoveredSearch] = useState(false);
   const [isHoveredLogout, setIsHoveredLogout] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <nav style={{ 
@@ -57,6 +61,10 @@ const NavBar = () => {
             <button 
                 onMouseEnter={() => setIsHoveredLogout(true)}
                 onMouseLeave={() => setIsHoveredLogout(false)}
+                onClick={
+                    () => {dispatch(logout());
+                    navigate('/login');
+                  }}
                 style={{ width: '100px', height: '100%', backgroundColor: isHoveredLogout ? 'grey' : 'white', color: isHoveredLogout ? 'white' : 'black', padding: '3px 5px', fontWeight: 'bold', borderRadius: '50px', border: '1px solid grey' }}>
                 Logout
             </button>

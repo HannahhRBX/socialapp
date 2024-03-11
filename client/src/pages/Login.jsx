@@ -3,14 +3,18 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/userSlice";
+import { useEffect } from 'react';
 
 const LoginForm = () => {
   const { user } = useSelector((state) => state.user);
   const form = useForm({ mode: "onChange" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { register, handleSubmit } = form;
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const onSubmit = async (data) => {
     const sendLogin = async (data) => {
@@ -22,7 +26,7 @@ const LoginForm = () => {
       const loggedIn = await response.json();
       if (loggedIn.token) {
         
-        dispatch(login({ user: loggedIn.user, token: loggedIn.token }));
+        dispatch(login({ user: loggedIn.user, token: loggedIn.token, edit: false }));
         console.log(loggedIn.user, user);
         navigate("/");
       }
