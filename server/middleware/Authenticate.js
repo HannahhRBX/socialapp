@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+// Middleware pass function to authenticate token against public key
 export const authenticateToken = async (req,res,next) =>{
     try{
         const header = req.headers["authorization"];

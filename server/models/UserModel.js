@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
+// Create schema for the User object
 const UserSchema = new mongoose.Schema(
     {
         FirstName: {type: String, required: true, min: 2, max: 63},

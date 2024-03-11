@@ -1,13 +1,17 @@
 import Post from "../models/PostModel.js";
 import User from "../models/UserModel.js";
 
+// Function to create a new post
 export const CreatePost = async(req,res)=>{
     try {
+
+        // Getting uploaded file from request
         const UploadFile = req.file;
         var FileName = "";
         if (UploadFile){
             FileName = UploadFile.filename;
         }
+        // Destructuring request body to get user id, body text, and image
         const {
             UserId,
             BodyText,
@@ -15,6 +19,7 @@ export const CreatePost = async(req,res)=>{
         } = req.body;
         console.log(UserId,BodyText,Image,FileName)
         const user = await User.findById(UserId);
+        // Creating new post with provided data
         const NewPost = new Post({
             UserId,
             BodyText,
@@ -26,6 +31,7 @@ export const CreatePost = async(req,res)=>{
         const GetPosts = await Post.find();
         res.status(200).json(GetPosts);
     }catch(err){
+        // Send response with error message
         res.status(500).json({error: err.mesage});
     }
 };
@@ -35,30 +41,36 @@ export const GetPosts = async(req,res) =>{
         const Posts = await Post.find();
         res.status(200).json(Posts);
     } catch(error) {
+        // Send response with error message
         res.status(404).json({message: error.message})
     }
 };
 
+// Function to get a specific post
 export const GetPost = async(req,res) =>{
     try {
         const {id} = req.params;
         const GetPost = await Post.findById(id);
         res.status(200).json(GetPost);
     } catch(error) {
+        // Send response with error message
         res.status(404).json({message: error.message})
     }
 };
 
+// Function to get all posts by a specific user
 export const GetAllPostsByUser = async(req,res) =>{
     try {
         const {UserId} = req.params;
         const Posts = await Post.find({UserId});
         res.status(200).json(Posts);
     } catch(error) {
+        // Send response with error message
         res.status(404).json({message: error.message})
     }
 };
 
+// Function to like or unlike a post
 export const LikeUnlikePost = async(req,res) =>{
     try {
         const {id} = req.params;
@@ -75,10 +87,12 @@ export const LikeUnlikePost = async(req,res) =>{
         );
         res.status(200).json(UpdatePost);
     } catch(error) {
+        // Send response with error message
         res.status(404).json({message: error.message})
     }
 };
 
+// Function to delete a post
 export const DeletePost = async(req,res) =>{
     try {
         const {id} = req.params;
@@ -86,6 +100,7 @@ export const DeletePost = async(req,res) =>{
         const Posts = await Post.find();
         res.status(200).json(Posts);
     } catch(error) {
+        // Send response with error message
         res.status(404).json({message: error.message})
     }
 };

@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
+// Create schema for the Post object
 const PostSchema = new mongoose.Schema(
     {
         UserId: {type: String, required: true, min: 2, max: 63},

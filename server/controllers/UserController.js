@@ -2,6 +2,7 @@ import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+// Function to create a new user
 export const Register = async(req,res)=>{
     
     try {
@@ -43,8 +44,10 @@ export const Register = async(req,res)=>{
     }
 };
 
+// Function to login user and pass token
 export const Login = async(req,res) =>{
     try {
+        console.log(req.body);
         const {email,password} = req.body;
         const user = await User.findOne({Email: email});
         if (!user){
@@ -63,6 +66,7 @@ export const Login = async(req,res) =>{
     }
 };
 
+// Function to get all users
 export const GetUsers = async(req,res) =>{
     try {
         const user = await User.find();
@@ -72,7 +76,7 @@ export const GetUsers = async(req,res) =>{
     }
 };
 
-
+// Function to get all friends by specific user
 export const GetAllFriendsByUser = async (req,res)=>{
     const {id} = req.params;
     const user = await User.findById(id);
@@ -80,6 +84,7 @@ export const GetAllFriendsByUser = async (req,res)=>{
     res.status(200).json(friends);
 }
 
+// Function to get all games by specific user
 export const GetAllGamesByUser = async (req,res)=>{
     const {id} = req.params;
     const user = await User.findById(id);
@@ -87,6 +92,7 @@ export const GetAllGamesByUser = async (req,res)=>{
     res.status(200).json(games);
 }
 
+// Function to remove value from array
 function RemoveFromArray(Arr,Value){
     const index = Arr.indexOf(Value);
     if (index>-1){
@@ -95,6 +101,7 @@ function RemoveFromArray(Arr,Value){
     return Arr
 };
 
+// Function to add or remove friend
 export const addRemoveFriend = async(req,res)=>{
     try {
         const {id,FriendId} = req.params;

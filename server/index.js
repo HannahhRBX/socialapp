@@ -16,7 +16,7 @@ import postRoutes from "./routes/PostRoutes.js";
 import {authenticateToken} from "./middleware/Authenticate.js";
 //import loginRoute from "./routes/login.js";
 
-/*Initialise the App*/
+// Initialising express app
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -31,7 +31,7 @@ app.use(cors());
 app.use("/images",express.static(path.join(__dirname,"public/images")))
 
 
-/* multer data uploader initialisation */
+// Initialising Multer for file uploads
 const storage = multer.diskStorage({
     destination: function(req,file,cb) {
         cb(null, "public/images");
@@ -42,17 +42,19 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage: storage});
 
+// Setting up routes
 app.post("/post",authenticateToken,upload.single("Image"),CreatePost)
-app.post("/Login",Login);
-app.post("/Register",upload.single("ProfilePicture"),Register);
+app.post("/login",Login);
+app.post("/register",upload.single("ProfilePicture"),Register);
 app.use("/users",userRoutes)
 app.use("/games",gameRoutes)
 app.use("/posts",postRoutes)
 
-/* mongodb database initialisation */
+// Initialising MongoDB
 const PORT = process.env.PORT || 5001;
 const DB_URL = process.env.MONGO_DB || "";
 
+// Initialising server
 mongoose.connect(process.env.MONGO_DB).then(()=>{
     app.listen(PORT,() => console.log(`Server listening on Port: ${PORT}`))
 }).catch((error)=>console.log(`${error}: failed to connect.`))
