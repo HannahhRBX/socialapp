@@ -35,23 +35,24 @@ const NavBar = () => {
             <Link to="/contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</Link>
         </div>
         <div style={{ display: 'flex', height: '60%', width: '300px', overflow: 'hidden', border: '1px solid grey',borderRadius: '50px', backgroundColor: 'white' }}>
-            <input type="text" style={{ flex: '1', padding: '5px', backgroundColor: 'transparent', border: 'none' }} />
+            <input className="focus:outline-none" type="text" style={{ flex: '1', padding: '15px', backgroundColor: 'transparent', border: 'none' }} />
             <div style={{ width: '50%', display: 'flex', paddingRight:'5px', alignItems: 'center',  justifyContent: 'right', backgroundColor: 'white' }}>
             <button 
                 onMouseEnter={() => setIsHoveredSearch(true)}
                 onMouseLeave={() => setIsHoveredSearch(false)}
                 style={{ 
-                    width: '80%', 
+                    width: '90%', 
                     height: '80%', 
-                    backgroundColor: isHoveredSearch ? '#9A9A9A' : '#E9E9E9', 
-                    color: isHoveredSearch ? 'white' : 'black', 
+                    backgroundColor: isHoveredSearch ? '#2F3A4D' : '#4A6AA5', 
+                    color: isHoveredSearch ? 'white' : 'white', 
                     padding: '8px', 
                     fontWeight: 'bold', 
                     borderRadius: '50px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid #B6B6B6'
+                    border: '1px solid #B6B6B6',
+                    textShadow: !isHoveredSearch ? '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' : 'none'
                 }}>
                 Search
             </button>

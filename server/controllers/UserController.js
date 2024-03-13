@@ -105,23 +105,26 @@ function RemoveFromArray(Arr,Value){
 export const addRemoveFriend = async(req,res)=>{
     try {
         const {id,FriendId} = req.params;
-        
-        const user = await User.findById(id);
-        const friend = await User.findById(FriendId);
-        
-        if (user.Friends.includes(FriendId)){
+        if (req.user.id == id){
+            const user = await User.findById(id);
+            const friend = await User.findById(FriendId);
             
-            user.Friends = RemoveFromArray(user.Friends,FriendId);
-            friend.Friends = RemoveFromArray(friend.Friends,id);
+            if (user.Friends.includes(FriendId)){
+                
+                user.Friends = RemoveFromArray(user.Friends,FriendId);
+                friend.Friends = RemoveFromArray(friend.Friends,id);
+            }else{
+                user.Friends.push(FriendId);
+                friend.Friends.push(id);
+            }
+            await user.save();
+            await friend.save();
+            console.log(user)
+            console.log(friend)
+            res.status(200).json(user.Friends);
         }else{
-            user.Friends.push(FriendId);
-            friend.Friends.push(id);
+            res.status(400).json({message: "Unauthorized"})
         }
-        await user.save();
-        await friend.save();
-        console.log(user)
-        console.log(friend)
-        res.status(200).json(user.Friends);
 
     }catch(error){
         res.status(404).json({message: error.message});
