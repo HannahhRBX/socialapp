@@ -61,8 +61,8 @@ export const GetPost = async(req,res) =>{
 // Function to get all posts by a specific user
 export const GetAllPostsByUser = async(req,res) =>{
     try {
-        const {UserId} = req.params;
-        const Posts = await Post.find({UserId});
+        const {id} = req.params;
+        const Posts = await Post.find({UserId: id});
         res.status(200).json(Posts);
     } catch(error) {
         // Send response with error message
@@ -102,7 +102,7 @@ export const LikeUnlikePost = async(req,res) =>{
 // Function to delete a post
 export const DeletePost = async(req,res) =>{
     try {
-        
+
         const {id} = req.params;
         const GetPost = await Post.findById(id);
         if (req.user.id == GetPost.UserId){
