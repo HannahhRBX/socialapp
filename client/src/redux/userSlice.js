@@ -21,7 +21,14 @@ const userSlice = createSlice({
       localStorage.removeItem("user");
     },
     updateProfile(state, action) {
-      state.edit = action.payload;
+      //state.edit = action.payload;
+      state.user = action.payload.user;
+      console.log(action.payload);
+      if (action.payload.user) {
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+      } else {
+          console.error('Invalid user data.');
+      }
     },
   },
 });

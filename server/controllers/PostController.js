@@ -62,7 +62,7 @@ export const GetPost = async(req,res) =>{
 export const GetAllPostsByUser = async(req,res) =>{
     try {
         const {id} = req.params;
-        const Posts = await Post.find({UserId: id});
+        const Posts = await Post.find({UsersId: id});
         res.status(200).json(Posts);
     } catch(error) {
         // Send response with error message

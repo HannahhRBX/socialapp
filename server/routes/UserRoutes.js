@@ -7,9 +7,10 @@ const router = express.Router();
 //Retrieve
 router.get("/:id/friends",authenticateToken,GetAllFriendsByUser);
 router.get("/:id/games",GetAllGamesByUser);
-router.get("/:id/posts",authenticateToken,GetAllPostsByUser);
+router.get("/:id/posts",GetAllPostsByUser);
 // Update
 router.patch("/:id/addfriend/:FriendId",authenticateToken,addRemoveFriend);
+
 
 
 export default router;

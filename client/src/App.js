@@ -1,20 +1,24 @@
 import React, { useEffect } from "react";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { useLocation, useNavigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
+import EditProfile from "./pages/EditProfile";
+import ChangePassword from "./pages/ChangePassword";
 
 // Layout component for user authentication
 const Layout = () => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     
-    if (user.token == null) {
+    if (user.token == null && location.pathname !== '/login') {
       //navigate("/login");
     }
-  }, [user, navigate]);
+  }, [user, navigate, location]);
 
   return (
     <div>
@@ -22,6 +26,9 @@ const Layout = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
         </Routes>
       </div>
     </div>

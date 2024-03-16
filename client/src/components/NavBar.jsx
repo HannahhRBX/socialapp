@@ -59,6 +59,7 @@ const NavBar = () => {
             </div>
         </div>
         <div style={{ paddingRight: '9px', height: '60%' }}>
+            
             <button 
                 onMouseEnter={() => setIsHoveredLogout(true)}
                 onMouseLeave={() => setIsHoveredLogout(false)}

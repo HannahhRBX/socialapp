@@ -7,7 +7,7 @@ import multer from "multer";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import {Register,Login} from "./controllers/UserController.js";
+import {Register,Login,UpdateProfile,UpdatePassword} from "./controllers/UserController.js";
 import {CreatePost} from "./controllers/PostController.js";
 import helmet from "helmet";
 import userRoutes from "./routes/UserRoutes.js";
@@ -45,6 +45,8 @@ const upload = multer({storage: storage});
 // Setting up routes
 app.post("/post",authenticateToken,upload.single("Image"),CreatePost)
 app.post("/login",Login);
+app.post("/editProfile",UpdateProfile);
+app.post("/changePassword",authenticateToken,UpdatePassword);
 app.post("/register",upload.single("ProfilePicture"),Register);
 app.use("/users",userRoutes)
 app.use("/games",gameRoutes)

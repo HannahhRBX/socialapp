@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/userSlice";
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const LoginForm = () => {
   const { user } = useSelector((state) => state.user);
@@ -11,6 +11,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = form;
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     console.log(user);
@@ -23,12 +24,15 @@ const LoginForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const loggedIn = await response.json();
-      if (loggedIn.token) {
-        
+      
+      if (response.ok) {
+        const loggedIn = await response.json();
         dispatch(login({ user: loggedIn.user, token: loggedIn.token, edit: false }));
         console.log(loggedIn.user, user);
         navigate("/");
+      }else{
+        const err = await response.json();
+        setErrorMessage(err.message);
       }
     };
     sendLogin(data);
@@ -47,7 +51,7 @@ const LoginForm = () => {
               })}
             />
           </div>
-          <div className="mb-8">
+          <div className="mb-4">
             <label htmlFor="password" className="block text-gray-600 text-sm font-medium">Password</label>
             <input type="password" placeholder="Password" id="password" name="password" className="mt-1 p-2 w-full border rounded-md"
               {...register("password", {
@@ -55,6 +59,8 @@ const LoginForm = () => {
               })}
             />
           </div>
+          {errorMessage && <h2 className="mb-2 text-md font-bold text-center" style={{color: '#ff2121'}}>{errorMessage}</h2>}
+
           <div className="mb-1 flex items-center justify-center">
             <button type="submit" className="bg-[#5ec1ff] text-white p-3 w-1/2 rounded-md hover:bg-blue-600 ">Login</button>
           </div>

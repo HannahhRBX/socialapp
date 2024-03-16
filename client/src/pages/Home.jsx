@@ -1,10 +1,14 @@
+import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import NavBar from "../components/NavBar";
+import { useNavigate } from 'react-router-dom';
 // https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg
 //discord https://static.vecteezy.com/system/resources/previews/006/892/625/original/discord-logo-icon-editorial-free-vector.jpg
 const Home = () => {
     const user = useSelector((state) => state.user);
+    const [isHoveredEdit, setIsHoveredEdit] = useState(false);
     const UserData = user.user;
+    const navigate = useNavigate();
     console.log(user);
     //console.log(user.token);
     return (
@@ -24,9 +28,20 @@ const Home = () => {
                         <img src="https://static.vecteezy.com/system/resources/previews/006/892/625/original/discord-logo-icon-editorial-free-vector.jpg" alt="Discord" className="w-1/3 h-full rounded-3xl p-2.5"/>
                             <p className="text-2xl text-white font-bold mb-2 stroke-slate-50" style={{textShadow: '-1px 0 black, 0 2px black, 1px 0 black, 0 -1px black'}}>@{UserData.Discord}</p>
                         </div>
+                        <button 
+                        onMouseEnter={() => setIsHoveredEdit(true)}
+                        onMouseLeave={() => setIsHoveredEdit(false)}
+                        onClick={
+                            () => {
+                            navigate('/editProfile');
+                        }}
+                        style={{ width: '100px', height: '10%', backgroundColor: isHoveredEdit ? 'grey' : 'white', color: isHoveredEdit ? 'white' : 'black', margin: '20px',padding: '8px 5px', fontWeight: 'bold', borderRadius: '50px', border: '1px solid grey' }}>
+                        Edit
+                    </button>
+                        
                     </div>
                     <div className="feed w-1/2 bg-white p-6 rounded-xl mx-4">
-                        <input  className="focus:outline-none w-full p-2 mb-4 border rounded-lg" type="text" placeholder="What's on your mind?" />
+                        {/*<input  className="focus:outline-none w-full p-2 mb-4 border rounded-lg" type="text" placeholder="What's on your mind?" />*/}
                         {/* Posts go here */}
                     </div>
                     <div className="suggested w-1/4 bg-white p-6 rounded-xl ml-4">

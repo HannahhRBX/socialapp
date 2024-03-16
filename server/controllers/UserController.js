@@ -51,11 +51,11 @@ export const Login = async(req,res) =>{
         const {email,password} = req.body;
         const user = await User.findOne({Email: email});
         if (!user){
-            return res.status(400).json({msg: "Invalid credentials."})
+            return res.status(400).json({message: "Invalid email or password."})
         }
         const isMatch = await bcrypt.compare(password,user.Password);
         if (!isMatch){
-            return res.status(400).json({msg: "Invalid credentials."})
+            return res.status(400).json({message: "Invalid email or password."})
         }
         const token = jwt.sign({id: user._id}, process.env.PUBLIC_KEY);
         console.log(token)
@@ -65,6 +65,81 @@ export const Login = async(req,res) =>{
         res.status(404).json({message: error.message})
     }
 };
+
+// Function to update user data
+export const UpdateProfile = async (req, res) => {
+    try {
+        const { 
+            id,
+            ProfilePicture,
+            FirstName,
+            LastName,
+            Bio,
+            Discord
+        } = req.body;
+        const updateData = req.body;
+        console.log(req.body);
+        for (let key in updateData) {
+            if ( updateData[key] === null || Object.keys(updateData[key]).length === 0 || key === "id") {
+                delete updateData[key];
+            }
+        }
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(400).json({msg: "Invalid user."})
+        }
+        // Make sure user cannot update their id
+        const UpdatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
+        
+        res.status(200).json(UpdatedUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Function to update user data
+export const UpdatePassword = async (req, res) => {
+    try {
+        
+        const {
+            id,
+            CurrentPassword,
+            NewPassword,
+            ConfirmPassword
+        } = req.body;
+        
+        const user = await User.findById(id);
+        if (!user){
+            return res.status(400).json({msg: "Invalid user."})
+        }
+        
+        
+        
+        if (req.user.id == id){
+            if (NewPassword != ConfirmPassword){
+                return res.status(400).json({message: "Passwords do not match"});
+            }
+            const isMatch = await bcrypt.compare(CurrentPassword,user.Password);
+            if (!isMatch){
+                
+                return res.status(400).json({message: "Current password is invalid."})
+            }
+
+            const Hash = await bcrypt.genSalt();
+            const PasswordHash = await bcrypt.hash(NewPassword,Hash);
+            const UpdatedUser = await User.findByIdAndUpdate(id, {Password: PasswordHash}, { new: true });
+            
+            
+            res.status(200).json(UpdatedUser);
+        }else{
+            
+            res.status(400).json({message: "Unauthorized"})
+        }
+    }catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+
 
 // Function to get all users
 export const GetUsers = async(req,res) =>{

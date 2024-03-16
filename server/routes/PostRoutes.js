@@ -11,8 +11,8 @@ router.delete("/:id/delete",authenticateToken,DeletePost);
 router.patch("/:id/like",authenticateToken,LikeUnlikePost);
 
 // Retrieve
-router.get("/:id",authenticateToken,GetPost);
-router.get("/",authenticateToken,GetPosts);
+router.get("/:id",GetPost);
+router.get("/",GetPosts);
 
 
 
