@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/userSlice";
+import SubmitButton from "../components/SubmitButton";
+import NavButton from "../components/NavButton";
+
 import React, { useState, useEffect } from 'react';
 
 const LoginForm = () => {
@@ -10,42 +13,42 @@ const LoginForm = () => {
   const form = useForm({ mode: "onChange" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, formState: { errors } } = form;
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     console.log(user);
   }, [user]);
 
-  const onSubmit = async (data) => {
-    const sendLogin = async (data) => {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      
-      if (response.ok) {
-        const loggedIn = await response.json();
-        dispatch(login({ user: loggedIn.user, token: loggedIn.token, edit: false }));
-        console.log(loggedIn.user, user);
-        navigate("/");
-      }else{
-        const err = await response.json();
-        setErrorMessage(err.message);
-      }
-    };
+  const sendLogin = async (data) => {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const loggedIn = await response.json();
+      dispatch(login({ user: loggedIn.user, token: loggedIn.token, edit: false }));
+      navigate("/");
+    } else {
+      const err = await response.json();
+      setErrorMessage(err.message);
+    }
+  };
+
+  const onSubmit = (data) => {
     sendLogin(data);
   };
 
   return (
     <div className="bg-[#c9d0ff] min-h-screen flex items-center justify-center bg-cover bg-center" style={{backgroundImage: 'url("https://img.freepik.com/premium-vector/abstract-smooth-blur-purple-blue-color-gradient-background-website-banner-graphic-design_120819-893.jpg")'}}>
       <div className="bg-[#ffffff] p-8 rounded shadow-2xl w-96">
-        <h2 className="text-4xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-4xl font-bold mb-6 text-center" >Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-600 text-sm font-medium">Email</label>
-            <input type="text" placeholder="email@example.com" id="email" name="email" className="mt-1 p-2 w-full border rounded-md"
+            <input type="text" placeholder="Email" id="email" name="email" className="focus:outline mt-1 p-2 w-full border" style={{ paddingLeft: '12px', overflow: 'hidden', border: '1px solid grey',borderRadius: '10px', backgroundColor: 'white' }}
               {...register("email", {
                 required: "Email is required!",
               })}
@@ -53,18 +56,21 @@ const LoginForm = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-600 text-sm font-medium">Password</label>
-            <input type="password" placeholder="Password" id="password" name="password" className="mt-1 p-2 w-full border rounded-md"
+            <input type="password" placeholder="Password" id="password" name="password" className="focus:outline mt-1 p-2 w-full border rounded-md" style={{ paddingLeft: '12px', overflow: 'hidden', border: '1px solid grey',borderRadius: '10px', backgroundColor: 'white' }}
               {...register("password", {
                 required: "Password is required!",
               })}
             />
           </div>
-          {errorMessage && <h2 className="mb-2 text-md font-bold text-center" style={{color: '#ff2121'}}>{errorMessage}</h2>}
-
+          { (errors.email || errors.password || errorMessage ) && <h2 className="mb-2 text-md font-bold text-center" style={{color: '#ff2121'}}>Invalid email or password.</h2>}
+          
           <div className="mb-1 flex items-center justify-center">
-            <button type="submit" className="bg-[#5ec1ff] text-white p-3 w-1/2 rounded-md hover:bg-blue-600 ">Login</button>
+            
+          <SubmitButton buttonText="Login" style={{ border: '1px solid #D6D6D6', borderRadius: '10px',width:'170px', textShadow: '0px 0 #171717, 0 0px #171717, 0px 0 #171717, 0 0px #171717' }} backgroundColor={'#171717'} hoverColor={'#000000'} />
+            
           </div>
         </form>
+        <NavButton buttonText="Create Account" URL={"/register"} style={{fontWeight: '400',  border: '1px solid #D6D6D6', borderRadius: '10px',width:'160px', height:'30px', color: '#3D3D3D',  textShadow: '0px 0 white, 0 0px white, 0px 0 white, 0 -0px white' }} backgroundColor={'#FBFBFB'} hoverColor={'#F5F5F5'} />
       </div>
     </div>
   );

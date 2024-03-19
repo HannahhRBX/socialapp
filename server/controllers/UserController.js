@@ -12,16 +12,15 @@ export const Register = async(req,res)=>{
         if (UploadFile){
             FileName = UploadFile.filename;
         }
+        
         const {
             FirstName,
             LastName,
             Email,
-            Password,
-            ProfilePicture,
-            Bio,
             Discord,
-            Games,
-            Friends
+            Password,
+            ConfirmPassword,
+            ProfilePicture
         } = req.body;
         
         const Hash = await bcrypt.genSalt();
@@ -32,13 +31,16 @@ export const Register = async(req,res)=>{
             Email,
             Password: PasswordHash,
             ProfilePicture: FileName,
-            Bio,
+            
             Discord,
-            Games,
-            Friends
+            
         });
-        const updateData = await NewUser.save();
-        res.status(201).json(updateData);
+        console.log("Sdasd")
+        const user = await NewUser.save();
+        console.log("Hi")
+        const token = jwt.sign({id: user._id}, process.env.PUBLIC_KEY);
+        console.log("s",token)
+        res.status(201).json({token,user});
     }catch(err){
         res.status(500).json({error: err.mesage});
     }
@@ -78,6 +80,13 @@ export const UpdateProfile = async (req, res) => {
             Discord
         } = req.body;
         const updateData = req.body;
+        console.log(req.file)
+        if (req.file) {
+            updateData.ProfilePicture = req.file.filename; // or req.file.filename, depending on your setup
+        }else{
+            delete updateData.ProfilePicture;
+        }
+        //console.log(updateData.ProfilePicture)
         console.log(req.body);
         for (let key in updateData) {
             if ( updateData[key] === null || Object.keys(updateData[key]).length === 0 || key === "id") {
@@ -117,7 +126,7 @@ export const UpdatePassword = async (req, res) => {
         
         if (req.user.id == id){
             if (NewPassword != ConfirmPassword){
-                return res.status(400).json({message: "Passwords do not match"});
+                return res.status(400).json({message: "Passwords do not match."});
             }
             const isMatch = await bcrypt.compare(CurrentPassword,user.Password);
             if (!isMatch){

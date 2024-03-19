@@ -17,7 +17,7 @@ const NavBar = () => {
         justifyContent: 'space-between', 
         alignItems: 'center',
         position: 'relative',
-        backgroundColor: 'rgba(255, 255, 255, 0.7)'
+        backgroundColor: '#171717'
     }}>
         <div style={{
             backgroundImage: 'url("https://wallpapercave.com/wp/wp4464940.jpg")',
@@ -34,25 +34,27 @@ const NavBar = () => {
             <Link to="/about" style={{ color: 'white', textDecoration: 'none' }}>About</Link>
             <Link to="/contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</Link>
         </div>
-        <div style={{ display: 'flex', height: '60%', width: '300px', overflow: 'hidden', border: '1px solid grey',borderRadius: '50px', backgroundColor: 'white' }}>
+        <div style={{ display: 'flex', height: '60%', width: '400px', overflow: 'hidden', border: '1px solid grey',borderRadius: '10px', backgroundColor: 'white' }}>
             <input className="focus:outline-none" type="text" style={{ flex: '1', padding: '15px', backgroundColor: 'transparent', border: 'none' }} />
             <div style={{ width: '50%', display: 'flex', paddingRight:'5px', alignItems: 'center',  justifyContent: 'right', backgroundColor: 'white' }}>
             <button 
                 onMouseEnter={() => setIsHoveredSearch(true)}
                 onMouseLeave={() => setIsHoveredSearch(false)}
                 style={{ 
-                    width: '90%', 
+                    width: '40%', 
                     height: '80%', 
-                    backgroundColor: isHoveredSearch ? '#2F3A4D' : '#4A6AA5', 
-                    color: isHoveredSearch ? 'white' : 'white', 
+                    backgroundColor: isHoveredSearch ? '#F5F5F5' : '#FBFBFB', 
+                    color: '#171717',
                     padding: '8px', 
+                    fontSize: '0.95rem',
                     fontWeight: 'bold', 
-                    borderRadius: '50px',
+                    borderRadius: '8px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid #B6B6B6',
-                    textShadow: !isHoveredSearch ? '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' : 'none'
+                    border: '1px solid #D6D6D6',
+                   
+                    
                 }}>
                 Search
             </button>

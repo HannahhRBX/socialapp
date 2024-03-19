@@ -45,7 +45,7 @@ const upload = multer({storage: storage});
 // Setting up routes
 app.post("/post",authenticateToken,upload.single("Image"),CreatePost)
 app.post("/login",Login);
-app.post("/editProfile",UpdateProfile);
+app.post("/editProfile",upload.single("ProfilePicture"),UpdateProfile);
 app.post("/changePassword",authenticateToken,UpdatePassword);
 app.post("/register",upload.single("ProfilePicture"),Register);
 app.use("/users",userRoutes)

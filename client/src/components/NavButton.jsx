@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => {
+const NavButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => {
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
 
@@ -17,10 +17,7 @@ const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => 
         display: 'flex',
         marginTop: '10px',
         border: '1px solid #B6B6B6',
-        textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
-        alignItems: 'center', // add this line
-        justifyContent: 'center', // this will center the text horizontally
-        alignSelf: 'flex-start'
+        textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'
     };
 
     const sendClick = () => {
@@ -30,7 +27,7 @@ const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => 
     return (
         <button 
             onClick={sendClick}
-            className='items-left justify-center text-center'
+            className='col-span-1 mx-auto items-center justify-center text-center'
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{ ...defaultStyle, ...style }}>
@@ -39,4 +36,4 @@ const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => 
     );
 };
 
-export default BackButton;
+export default NavButton;

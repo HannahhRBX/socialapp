@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => {
+const SubmitButton = ({ buttonText, style, backgroundColor, hoverColor }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const navigate = useNavigate();
 
     const defaultStyle = { 
         width: '210px', 
@@ -17,20 +15,13 @@ const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => 
         display: 'flex',
         marginTop: '10px',
         border: '1px solid #B6B6B6',
-        textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
-        alignItems: 'center', // add this line
-        justifyContent: 'center', // this will center the text horizontally
-        alignSelf: 'flex-start'
-    };
-
-    const sendClick = () => {
-        navigate(URL);
+        textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'
     };
 
     return (
         <button 
-            onClick={sendClick}
-            className='items-left justify-center text-center'
+            type="submit"
+            className='col-span-1 mx-auto items-center justify-center text-center'
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{ ...defaultStyle, ...style }}>
@@ -39,4 +30,4 @@ const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => 
     );
 };
 
-export default BackButton;
+export default SubmitButton;

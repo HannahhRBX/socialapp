@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import { useNavigate } from 'react-router-dom';
 import { updateProfile } from "../redux/userSlice";
 import BackButton from "../components/BackButton";
+import SubmitButton from "../components/SubmitButton";
 
 // https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg
 //discord https://static.vecteezy.com/system/resources/previews/006/892/625/original/discord-logo-icon-editorial-free-vector.jpg
@@ -52,12 +53,12 @@ const ChangePassword = () => {
     return (
         <div className="home">
             <NavBar />
-            <div className="background h-screen bg-[#f1f2f7] flex justify-center">
-                <div className="content flex  mt-6 justify-center" style={{ width:'600px',height:'630px' }}>
+            <div className="background h-screen bg-[#f1f2f7] flex items-center justify-center">
+                <div className="mt-6 justify-center" style={{ width:'600px' }}>
                     <div className="shadow-lg profile bg-white p-6 rounded-xl mr-4 flex flex-col items-center justify-center" style={{width:'100%', height: '100%'}}>
-                        <BackButton navigateTo="/editProfile" />
+                    <BackButton buttonText="Back" URL={"/editProfile"} style={{marginTop:'-6px', fontWeight: '400',  border: '1px solid #D6D6D6', borderRadius: '10px',width:'90px', height:'40px', color: '#3D3D3D',  textShadow: '0px 0 white, 0 0px white, 0px 0 white, 0 -0px white' }} backgroundColor={'#FBFBFB'} hoverColor={'#F5F5F5'} />
                         <div className="avatar w-40 h-40 rounded-full bg-gray-200 shadow-lg border border-gray-200 flex items-center justify-center" style={{ border: '2px solid grey' }}>
-                            <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg" alt="Avatar" className="w-full h-full rounded-full"/>
+                            <img src={`http://localhost:5000/images/${UserData.ProfilePicture}`} alt="Avatar" className="w-full h-full rounded-full"/>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)} className=" grid grid-cols-1 gap-4 m-8" >
                             
@@ -88,30 +89,10 @@ const ChangePassword = () => {
                                 />
                             </div>
                             {errorMessage && <h2 className="text-md font-bold text-center" style={{color: '#ff2121', marginBottom: '-18px'}}>{errorMessage}</h2>}
-
-                            <button 
-                            type="submit"
-                            className='col-span-1 mx-auto items-center justify-center text-center'
-                            onMouseEnter={() => setIsHoveredPassword(true)}
-                            onMouseLeave={() => setIsHoveredPassword(false)}
+                            <div className="col-span-1 mb-1 flex items-center justify-center">
+                                <SubmitButton buttonText="Submit" style={{ border: '1px solid #D6D6D6', borderRadius: '10px',width:'200px', textShadow: '0px 0 #171717, 0 0px #171717, 0px 0 #171717, 0 0px #171717' }} backgroundColor={'#171717'} hoverColor={'#000000'} />
+                            </div>
                             
-                            style={{ 
-                                
-                                width: '210px', 
-                                height: '45px', 
-                                backgroundColor: isHoveredPassword ? '#C86111' : '#FF801D', 
-                                color: isHoveredPassword ? 'white' : 'white', 
-                                padding: '8px', 
-                                fontWeight: 'bold', 
-                                borderRadius: '50px',
-                                fontSize: '1.1rem',
-                                display: 'flex',
-                                marginTop: '10px',
-                                border: '1px solid #B6B6B6',
-                                textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black'
-                            }}>
-                            Update Password
-                        </button>
                         </form>
                         
                         
