@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from "../redux/userSlice";
 import { Link, useNavigate } from 'react-router-dom';
 
+{/*Top navigation bar*/}
 const NavBar = () => {
   const [isHoveredSearch, setIsHoveredSearch] = useState(false);
   const [isHoveredLogout, setIsHoveredLogout] = useState(false);
@@ -29,49 +30,57 @@ const NavBar = () => {
             height: '100%',
             zIndex: -1
         }}></div>
-        <div style={{ display: 'flex', justifyContent: 'space-around', width: 'auto' }}>
-            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-            <Link to="/about" style={{ color: 'white', textDecoration: 'none' }}>About</Link>
-            <Link to="/contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</Link>
-        </div>
-        <div style={{ display: 'flex', height: '60%', width: '400px', overflow: 'hidden', border: '1px solid grey',borderRadius: '10px', backgroundColor: 'white' }}>
-            <input className="focus:outline-none" type="text" style={{ flex: '1', padding: '15px', backgroundColor: 'transparent', border: 'none' }} />
-            <div style={{ width: '50%', display: 'flex', paddingRight:'5px', alignItems: 'center',  justifyContent: 'right', backgroundColor: 'white' }}>
-            <button 
-                onMouseEnter={() => setIsHoveredSearch(true)}
-                onMouseLeave={() => setIsHoveredSearch(false)}
-                style={{ 
-                    width: '40%', 
-                    height: '80%', 
-                    backgroundColor: isHoveredSearch ? '#F5F5F5' : '#FBFBFB', 
-                    color: '#171717',
-                    padding: '8px', 
-                    fontSize: '0.95rem',
-                    fontWeight: 'bold', 
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '1px solid #D6D6D6',
-                   
-                    
-                }}>
-                Search
-            </button>
+        {/*Main navbar container*/}
+        <div style={{ width:'100%',height: '30%',display: 'flex', justifyContent: 'center', alignItems:'center' }}>
+            {/*Logo div*/}
+            <div style={{ flex: 1,display: 'flex', justifyContent: 'flex-start' }}>
+                <Link to="/">
+                <img src="http://localhost:5000/images/logo.png" alt="Logo" style={{ width: 'auto', paddingLeft:'20px', height: '30px', cursor: 'pointer' }} />
+                </Link>
             </div>
-        </div>
-        <div style={{ paddingRight: '9px', height: '60%' }}>
-            
-            <button 
-                onMouseEnter={() => setIsHoveredLogout(true)}
-                onMouseLeave={() => setIsHoveredLogout(false)}
-                onClick={
-                    () => {dispatch(logout());
-                    navigate('/login');
-                  }}
-                style={{ width: '100px', height: '100%', backgroundColor: isHoveredLogout ? 'grey' : 'white', color: isHoveredLogout ? 'white' : 'black', padding: '3px 5px', fontWeight: 'bold', borderRadius: '50px', border: '1px solid grey' }}>
-                Logout
-            </button>
+            {/*Flex div to seperate logo, search bar and logout button into three columns*/}
+            <div style={{ flex: 2, display: 'flex', justifyContent: 'center' }}>
+                {/*Searchbar div*/}
+                <div style={{ display: 'flex', height: '47px', width: '400px', overflow: 'hidden', border: '1px solid grey',borderRadius: '11px', backgroundColor: 'white' }}>
+                    <input className="focus:outline-none" type="text" style={{ flex: '1', padding: '15px', backgroundColor: 'transparent', border: 'none', fontSize:'1.1rem', fontWeight:'500' }} />
+                    <div style={{ width: '20%', display: 'flex', paddingRight:'5px', alignItems: 'center',  justifyContent: 'right', backgroundColor: 'white' }}>
+                        <button 
+                            onMouseEnter={() => setIsHoveredSearch(true)}
+                            onMouseLeave={() => setIsHoveredSearch(false)}
+                            style={{ 
+                                width: '100%', 
+                                height: '75%', 
+                                backgroundColor: isHoveredSearch ? '#F0F0F0' : '#F7F7F7', 
+                                color: '#171717',
+                                padding: '8px', 
+                                fontSize: '0.95rem',
+                                fontWeight: 'bold', 
+                                borderRadius: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                border: '1px solid #D6D6D6',
+                            }}>
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {/*Logout button container*/}
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                <div style={{ paddingRight: '9px', height: '35px' }}>
+                    <button 
+                        onMouseEnter={() => setIsHoveredLogout(true)}
+                        onMouseLeave={() => setIsHoveredLogout(false)}
+                        onClick={() => {
+                            dispatch(logout());
+                            navigate('/login');
+                        }}
+                        style={{ width: '80px', height: '100%', backgroundColor: isHoveredLogout ? '#eeeeee' : '#F7F7F7',  color: '#171717', padding: '3px 5px', fontWeight: 'bold', borderRadius: '8px', border: '1px solid grey' }}>
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
   );

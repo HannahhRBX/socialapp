@@ -24,6 +24,7 @@ const Layout = () => {
   return (
     <div>
       <div className="pages">
+        {/*Website routes for setting up page navigation*/}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

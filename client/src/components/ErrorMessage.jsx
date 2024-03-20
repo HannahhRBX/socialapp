@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Error message component for importing into forms
 const ErrorMessage = ({ message }) => {
     return (
         

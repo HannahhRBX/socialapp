@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Button with navigation URL parameter on click for importing into pages
 const NavButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => {
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();

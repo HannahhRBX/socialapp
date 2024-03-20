@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// Button component with submit function for completing forms
 const SubmitButton = ({ buttonText, style, backgroundColor, hoverColor }) => {
     const [isHovered, setIsHovered] = useState(false);
 

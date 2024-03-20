@@ -22,8 +22,28 @@ export const Register = async(req,res)=>{
             ConfirmPassword,
             ProfilePicture
         } = req.body;
-        
+        // Hash user password
         const Hash = await bcrypt.genSalt();
+        // Simple validation to check if fields are less than minimum required characters
+        if (FirstName.length < 2 || LastName.length < 2){
+            return res.status(400).json({message: "First and Last name must be at least 2 characters."});
+        }
+        if (Email.length < 6){
+            return res.status(400).json({message: "Email must be at least 6 characters."});
+        }
+        // Check if email is valid
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(Email)) {
+            return res.status(400).json({message: "Email is not valid."});
+        }
+        // Checkk if passwords match
+        if (Password != ConfirmPassword){
+            return res.status(400).json({message: "Passwords do not match."});
+        }
+        // Check if password length is valid
+        if (Password.length < 8){
+            return res.status(400).json({message: "Password must be at least 8 characters."});
+        }
         const PasswordHash = await bcrypt.hash(Password,Hash);
         const NewUser = new User({
             FirstName,
@@ -35,11 +55,9 @@ export const Register = async(req,res)=>{
             Discord,
             
         });
-        console.log("Sdasd")
+        // Save user and send back to client with new authentication token
         const user = await NewUser.save();
-        console.log("Hi")
         const token = jwt.sign({id: user._id}, process.env.PUBLIC_KEY);
-        console.log("s",token)
         res.status(201).json({token,user});
     }catch(err){
         res.status(500).json({error: err.mesage});
@@ -80,13 +98,18 @@ export const UpdateProfile = async (req, res) => {
             Discord
         } = req.body;
         const updateData = req.body;
-        console.log(req.file)
+        // Check if first and last name are at least 2 characters
+        if (FirstName.length < 2 || LastName.length < 2){
+            return res.status(400).json({message: "First and Last name must be at least 2 characters."});
+        }
+
+        // Check for image file upload
         if (req.file) {
             updateData.ProfilePicture = req.file.filename; // or req.file.filename, depending on your setup
         }else{
             delete updateData.ProfilePicture;
         }
-        //console.log(updateData.ProfilePicture)
+        // Check for empty fields and remove them
         console.log(req.body);
         for (let key in updateData) {
             if ( updateData[key] === null || Object.keys(updateData[key]).length === 0 || key === "id") {

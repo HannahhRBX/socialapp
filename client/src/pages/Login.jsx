@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/userSlice";
 import SubmitButton from "../components/SubmitButton";
 import NavButton from "../components/NavButton";
-
 import React, { useState, useEffect } from 'react';
 
+{/*Login Page*/}
 const LoginForm = () => {
   const { user } = useSelector((state) => state.user);
   const form = useForm({ mode: "onChange" });
@@ -19,26 +19,24 @@ const LoginForm = () => {
   useEffect(() => {
     console.log(user);
   }, [user]);
-
-  const sendLogin = async (data) => {
+  // Login post request
+  const onSubmit = async (data) => {
     const response = await fetch("http://localhost:5000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
+    // If login okay, set cookie as user and token and navigate to home page
     if (response.ok) {
       const loggedIn = await response.json();
       dispatch(login({ user: loggedIn.user, token: loggedIn.token, edit: false }));
       navigate("/");
     } else {
+      // Display error if not okay
       const err = await response.json();
       setErrorMessage(err.message);
     }
-  };
-
-  const onSubmit = (data) => {
-    sendLogin(data);
   };
 
   return (
@@ -62,10 +60,10 @@ const LoginForm = () => {
               })}
             />
           </div>
+          {/*Form validation error messages appear here*/}
           { (errors.email || errors.password || errorMessage ) && <h2 className="mb-2 text-md font-bold text-center" style={{color: '#ff2121'}}>Invalid email or password.</h2>}
           
           <div className="mb-1 flex items-center justify-center">
-            
           <SubmitButton buttonText="Login" style={{ border: '1px solid #D6D6D6', borderRadius: '10px',width:'170px', textShadow: '0px 0 #171717, 0 0px #171717, 0px 0 #171717, 0 0px #171717' }} backgroundColor={'#171717'} hoverColor={'#000000'} />
             
           </div>

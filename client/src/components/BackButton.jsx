@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// BackButton component for navigating back on a form
 const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => {
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
@@ -18,8 +19,8 @@ const BackButton = ({ buttonText, URL, style, backgroundColor, hoverColor }) => 
         marginTop: '10px',
         border: '1px solid #B6B6B6',
         textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
-        alignItems: 'center', // add this line
-        justifyContent: 'center', // this will center the text horizontally
+        alignItems: 'center',
+        justifyContent: 'center',
         alignSelf: 'flex-start'
     };
 
