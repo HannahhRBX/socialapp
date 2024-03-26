@@ -25,7 +25,7 @@ const Home = () => {
                 {/*Columns for profile, feed and recommended friends*/}
                 <div className="content flex w-11/12 mt-6">
                     {/*Profile column*/}
-                    <div className="profile w-1/4 h-3/5 bg-white p-6 rounded-xl mr-4 flex flex-col items-center">
+                    <div className="profile w-1/4 bg-white p-6 rounded-xl mr-4 flex flex-col items-center" style={{height:'530px'}}>
                         {/*User profile avatar image wiith auto width scaling*/}
                         <div className="avatar w-40 h-40 rounded-full bg-gray-200 shadow-lg border border-gray-200 flex items-center justify-center" style={{ border: '2px solid grey', backgroundImage: `url(http://localhost:5000/images/${UserData.ProfilePicture})`, backgroundSize: 'cover', backgroundPosition: 'center' }} aria-label="Avatar Image">
                         </div>

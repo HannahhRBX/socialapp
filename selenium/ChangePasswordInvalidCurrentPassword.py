@@ -11,10 +11,11 @@ time.sleep(1) # Prevent page loading issues
 # Profile Editing
 functions.ClickButtonByText('Edit Profile')
 time.sleep(1) # Prevent page loading issues
-functions.EnterByName('FirstName','Johnny')
-functions.EnterByName('LastName','')
-functions.EnterByName('Bio','This has been changed.')
-functions.EnterByName('Discord','Johnny26')
-functions.UploadFile("C:\\Users\\Hannah\\Pictures\\ProfilePicture2.png")
-functions.ClickButtonByText('Update')
+functions.ClickButtonByText('Change Password')
+time.sleep(1) # Prevent page loading issues
+functions.EnterByPlaceholder('Current Password','wrongpassword')
+functions.EnterByPlaceholder('New Password','password123')
+functions.EnterByPlaceholder('Confirm Password','password123')
+functions.ClickButtonByText('Submit')
+
 time.sleep(60) # Prevent browser from immediately closing

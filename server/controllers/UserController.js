@@ -151,6 +151,9 @@ export const UpdatePassword = async (req, res) => {
             if (NewPassword != ConfirmPassword){
                 return res.status(400).json({message: "Passwords do not match."});
             }
+            if (NewPassword.length < 8){
+                return res.status(400).json({message: "New password must be at least 8 characters."});
+            }
             const isMatch = await bcrypt.compare(CurrentPassword,user.Password);
             if (!isMatch){
                 
