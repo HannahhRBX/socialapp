@@ -16,6 +16,6 @@ functions.EnterByName('LastName','Doe')
 functions.EnterByName('Bio','This has been changed.')
 functions.EnterByName('Discord','Johnny26')
 functions.UploadFile("C:\\Users\\Hannah\\Pictures\\ProfilePicture2.png")
-time.sleep(1) # Prevent page loading issues
+time.sleep(5) # Prevent page loading issues
 functions.ClickButtonByText('Update')
 time.sleep(60) # Prevent browser from immediately closing

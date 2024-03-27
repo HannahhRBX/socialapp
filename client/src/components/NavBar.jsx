@@ -18,7 +18,10 @@ const NavBar = () => {
         justifyContent: 'space-between', 
         alignItems: 'center',
         position: 'relative',
-        backgroundColor: '#171717'
+        backgroundColor: '#171717',
+        position:'sticky', 
+        top: 0,
+        zIndex: 2
     }}>
         <div style={{
             backgroundImage: 'url("https://wallpapercave.com/wp/wp4464940.jpg")',
@@ -31,7 +34,7 @@ const NavBar = () => {
             zIndex: -1
         }}></div>
         {/*Main navbar container*/}
-        <div style={{ width:'100%',height: '30%',display: 'flex', justifyContent: 'center', alignItems:'center' }}>
+        <div style={{ width:'100%',height: '30%',display: 'flex', justifyContent: 'center', alignItems:'center'}}>
             {/*Logo div*/}
             <div style={{ flex: 1,display: 'flex', justifyContent: 'flex-start' }}>
                 <Link to="/">
